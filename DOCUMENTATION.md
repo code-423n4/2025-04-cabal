@@ -1,8 +1,61 @@
 # Cabal Protocol Smart Contracts - Auditor README
 
+## Intro to Cabal
+
+**Please view the Images Below!**
+
+https://docs.google.com/document/d/1Ttrb3CRS7WFIZVmt6pSMWfgMQSa8s0d0wAk3VHeaguM/edit?usp=sharing
+
+---
+
+Initia (https://docs.initia.xyz/) is a L1 chain that allows for the creation of L2 rollups on top of the L1. The L2 rollups are named ‘Minitias.’ Initia operates an incentive framework structure - the **Vested Interest Program.** The architecture, https://docs.initia.xyz/about/vested-interest-program/vip-architecture, distributes INIT tokens to a governance whitelisted set of Minitias based on:
+
+1) the amount of INIT tokens deposited on the Minitia L2
+
+2) Gauge voting process where INIT tokens stakers or governance whitelisted pairs of INIT-X LP tokens (i.e INIT-USDC) can vote on Minitia reward weighting.    
+
+Cabal is a protocol on Initia L1 that issues liquid staking wrappers when users deposit INIT or INIT-X LP tokens. These deposited assets are staked in Initia’s x/mstaking module, granting governance power and rewards from VIP. Cabal also integrates with Initia’s native DEX for liquidity.
+
+### **1. INIT → xINIT <> sxINIT**
+
+**A. Deposit INIT → xINIT**
+
+- Users deposit INIT into Cabal’s “xINIT deposit module”
+- In return, Cabal mints and sends the user xINIT, a liquid wrapped with no inherent staking yield on its own
+- The underlying INIT is max locked, providing Cabal max voting power.
+
+**B. Liquidity Provisions**
+
+- xINIT will be paired with INIT to form a whitelisted xINIT-INIT LP pair on Initia’s dex
+- This allows users to provide liquidity without unbonding their staked INIT
+
+**C. Staking xINIT <> sxINIT (X day lockup and unbonding period)**
+
+- If users want to earn yield and governance influence, they can convert their xINIT into sxINIT, redeeming sxINIT into xINIT goes through a 21 day unbonding period
+
+**D. Yield Sources for sxINIT Holders**
+
+- sxINIT will receive yield from (i) the underlying Initia network staking yield and (ii) Incentives from Cabal’s governance platform (bribes, gauge votes, etc)
+
+### **2. INIT-X LP Tokens**
+
+The Initia governance whitelisted set of INIT-X LP tokens have a separate deposit module on Cabal. LP token holders are able to stake their LP tokens into Cabal and receive a liquid wrapper representing the underlying.
+
+**For example:**
+
+- INIT-USDC LP token pair deposited into Cabal, Cabal stakes the LP token, and returns ‘Cabal Init-X LP’ token to the user for example.
+
+ LP tokens deposited and staked through Cabal, unlike pure INIT, is directly redeemable back into the original LP token - after the 21 day Initia x/staking unbonding period. CabalLP holders receive two sources of rewards:
+
+- Token emissions from InitiaDEX emissions. The INIT rewards are provided as liquidity into the same pool, thus giving Cabal more of the original token. When a user unstakes, they get more Cabal LP tokens than what they put in.
+- Direct incentives from Cabal’s built in governance incentive platform, through the same mechanism as sxINIT voting incentives.
+
+Voting Power/Staking yields from LP token pairs are based on the INIT portion of the value that the LP token represents.
+
+A majority of Cabal's revenues come from L2s who bribe use Cabal's vote-locked INIT to vote for them on the guage pool.
 ## Overview
 
-This document provides an overview of the core smart contracts for the Cabal Protocol, focusing on the structure, interactions, and key mechanisms relevant for auditing. Cabal is a liquid staking protocol built on Initia, allowing users to stake INIT (via xINIT/sxINIT) and whitelisted LP tokens, while also participating in a bribe marketplace to influence Initia's VIP gauge voting. **Note: Unstaking of LP tokens is currently not supported.**
+This document provides an overview of the core smart contracts for the Cabal Protocol, focusing on the structure, interactions, and key mechanisms relevant for auditing. Cabal is a liquid staking protocol built on Initia, allowing users to stake INIT (via xINIT/sxINIT) and whitelisted LP tokens, while also participating in a bribe marketplace to influence Initia's VIP gauge voting. 
 
 The primary modules involved in the core logic are:
 
@@ -12,7 +65,7 @@ The primary modules involved in the core logic are:
 *   **`voting_reward`**: Calculates and distributes bribe rewards to eligible Cabal token holders based on historical snapshots.
 *   **`pool_router`**: Acts as an abstraction layer managing interactions with underlying validators for different staked assets (INIT via `vip::lock_staking`, LPs via `mstaking`).
 
-Other relevant modules include `package` (shared addresses/signers), `manager` (admin controls), `emergency` (pausing), `utils` (helpers), and interactions with Initia standard library modules (`fungible_asset`, `primary_fungible_store`, `cosmos`, `vip`, `dex`, `object`, `table`, etc.).
+Other relevant modules include `package` (shared addresses/signers), `manager` (admin controls), `emergency` (pausing), `utils` (helpers), `snapshots` (helping with snapshots), and interactions with Initia standard library modules (`fungible_asset`, `primary_fungible_store`, `cosmos`, `vip`, `dex`, `object`, `table`, etc.).
 
 ## Core Modules and Responsibilities
 
@@ -21,7 +74,8 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
 *   **Responsibilities:**
     *   Handles user deposits of native INIT to mint xINIT (`deposit_init_for_xinit`).
     *   Manages the staking process where users lock underlying tokens (xINIT or LP tokens) to mint Cabal liquid staking tokens (sxINIT or Cabal LPTs) (`stake_asset`, triggering internal `stake_xinit` or `stake_lp` which use `cosmos::move_execute` to call `process_xinit_stake` or `process_lp_stake`).
-    *   Manages the **sxINIT** unstaking process (`initiate_unstake`), including calculating redemption amounts, initiating unbonding periods (triggering internal `unstake_xinit` which uses `cosmos::move_execute` to call `process_xinit_unstake`), and creating user-specific `UnbondingEntry` claims. **LP unstaking is not currently supported via this function.**
+    *   Manages the **sxINIT** unstaking process (`initiate_unstake`), including calculating redemption amounts, initiating unbonding periods (triggering internal `unstake_xinit` which uses `cosmos::move_execute` to call `process_xinit_unstake`), and creating user-specific `UnbondingEntry` claims. 
+    *   Manages the **LP** unstaking process as well as reward compounding etc.
     *   Allows users to claim their underlying **xINIT** assets after the unbonding period completes (`claim_unbonded_assets`).
     *   Configures and manages different staking pools (e.g., sxINIT pool, various LP token pools) via admin/manager functions like `config_stake_token`, `set_unbond_period`.
     *   Interacts with `pool_router` to delegate stake (`pool_router::add_stake`), trigger reward claims (`pool_router::request_claim_rewards`), and withdraw rewards/assets (`pool_router::withdraw_rewards`, `pool_router::withdraw_assets`).
@@ -86,8 +140,8 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
 ## Key Data Structures
 
 *   **`cabal::ModuleStore`**: Global state for staking. Holds fees, xINIT info, parallel vectors for pool configs (unbonding periods, stake/cabal token metadatas, capabilities, staked/reward amounts, pending undelegations), stake-to-cabal token map.
-*   **`cabal::CabalStore`**: Per-user state. Holds `unbonding_entries` (for sxINIT) and `voting_reward_claimed_amount` map.
-*   **`cabal::UnbondingEntry`**: Represents a user's specific claim during sxINIT unbonding.
+*   **`cabal::CabalStore`**: Per-user state. Holds `unbonding_entries` and `voting_reward_claimed_amount` map.
+*   **`cabal::UnbondingEntry`**: Represents a user's specific claim during unbonding.
 *   **`cabal_token::ModuleStore`**: Global state for token module, holds snapshot block info.
 *   **`cabal_token::HolderStore`**: Per-token state. Contains `holder_balance_map` (user address -> `CabalBalance`).
 *   **`cabal_token::CabalBalance`**: Per-user, per-token state. Holds current `balance`, `start_block`, and `snapshot` table (block height -> balance).
@@ -101,47 +155,14 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
 *   **`pool_router::PoolRouter`**: Stores `token_pool_map` (token metadata -> vector of `StakePool` objects).
 *   **`pool_router::StakePool`**: Represents a specific validator pool for a token, holding metadata, amount, `ExtendRef`, and validator address string.
 
-## Core User Flows (Simplified)
+## Core User Flows
 
-*   **xINIT/sxINIT Staking:**
-    1.  `cabal::deposit_init_for_xinit` (User deposits INIT, receives xINIT).
-    2.  `cabal::stake_asset` (User stakes xINIT).
-    3.  -> `cabal::stake_xinit` -> `cosmos::move_execute` -> `cabal::process_xinit_stake` (Calculates ratio, mints sxINIT via `cabal_token::mint_to`). *Note: Underlying INIT delegation happens via `pool_router::add_stake` -> `vip::lock_staking::delegate`.*
-*   **xINIT/sxINIT Unstaking:**
-    1.  `cabal::initiate_unstake` (User unstakes sxINIT).
-    2.  -> `cabal_token::burn` & `cabal::unstake_xinit` -> `cosmos::move_execute` -> `cabal::process_xinit_unstake` (Calculates underlying xINIT amount, creates `UnbondingEntry`). *Note: Underlying INIT undelegation likely needs separate handling via `vip::lock_staking`, triggered externally (e.g., keeper/admin).*
-    3.  `cabal::claim_unbonded_assets` (User claims xINIT after unbonding period).
-*   **LP Staking:**
-    1.  `cabal::stake_asset` (User stakes LP token).
-    2.  -> `cabal::stake_lp` -> `cosmos::move_execute` -> `cabal::process_lp_stake` (Delegates LP via `pool_router::add_stake` -> `cosmos::delegate`, calculates ratio, mints Cabal LPT via `cabal_token::mint_to`).
-*   **~~LP Unstaking:~~** **(Functionality Removed)**
-*   **Bribing (Minitia POV):**
-    1.  `bribe::deposit_bribe` -> `primary_fungible_store::transfer` & updates `bribe` table.
-*   **Claiming Bribes (User POV):**
-    1.  `voting_reward::claim_voting_reward`
-    2.  -> `voting_reward::get_single_reward` -> `voting_reward::get_cycle_reward_share` -> `cabal_token::get_snapshot_balance` & `bribe::get_total_bribes_by_token_for_cycle`.
-    3.  -> `cabal::update_claimed_voting_reward_amount`.
-    4.  -> `primary_fungible_store::transfer` (from reward store).
+**Please view the Images Below!**
 
-## Snapshotting Mechanism (`cabal_token`)
+https://docs.google.com/document/d/1Ttrb3CRS7WFIZVmt6pSMWfgMQSa8s0d0wAk3VHeaguM/edit?usp=sharing
 
-*   **Lazy Write:** Snapshots triggered globally (`voting_reward::snapshot` -> `cabal_token::snapshot`), but balances written to per-user storage (`CabalBalance.snapshot`) only upon user interaction post-snapshot (`check_snapshot`).
-*   **Lazy Read:** `get_snapshot_balance` checks the user's snapshot table first. If no entry for the requested block height, it returns the current balance (assuming inactivity).
-*   **Coordination:** `voting_reward::snapshot` captures token supplies/weights and calls `cabal_token::snapshot` in the same transaction to conceptually align state and balance snapshots.
+**Please view the images above - they are very helpful!**
 
-## Reward Calculation Logic (`voting_reward`)
-
-1.  Identify finalized cycles (`cycle_snapshot_map`).
-2.  For each cycle, get snapshot block height and data (`snapshots` table).
-3.  Calculate user's share for the cycle (`get_cycle_reward_share`):
-    *   For each Cabal stake token (sxINIT, Cabal LPTs):
-        *   Get user's balance at snapshot block (`cabal_token::get_snapshot_balance`).
-        *   Get token's total supply and voting weight from snapshot data.
-        *   `user_share_for_token = (user_balance / total_supply) * token_weight`.
-    *   Sum `user_share_for_token` across all tokens held = `total_share`.
-4.  Get total bribes for the cycle per token (`bribe::get_total_bribes_by_token_for_cycle`).
-5.  User's reward for a specific bribe token = `total_share * total_bribes_of_that_token`.
-6.  Sum across relevant cycles for total entitlement.
 
 ## External Dependencies & Interactions
 
@@ -169,7 +190,7 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
     2.  This triggers `cabal::process_lp_stake` (via `move_execute`), which delegates the LP token to a validator via `pool_router::add_stake` (`cosmos::delegate`), calculates the current LP/Cabal-LPT ratio, and mints the corresponding Cabal LPT to the user.
 *   **How does unstaking work?**
     *   **sxINIT:** User calls `cabal::initiate_unstake` with sxINIT. This burns the sxINIT and triggers `cabal::process_xinit_unstake` (via `move_execute`), which calculates the underlying xINIT amount based on the current ratio. An `UnbondingEntry` is created for the user. After the unbonding period (`cabal::ModuleStore.unbond_period[0]`), the user calls `cabal::claim_unbonded_assets` to receive their xINIT. *Note: The actual undelegation from `vip::lock_staking` needs to be triggered separately, likely by a keeper or admin action.*
-    *   **Cabal LPT:** **Unstaking of Cabal LPTs is not currently supported.**
+    *   **Cabal LPT:** Please refer to the flowcharts provided.
 *   **How does someone offer a bribe?**
     *   Anyone can call `bribe::deposit_bribe`, specifying the reward token (must be whitelisted), amount, target voting cycle, and target `bridge_id` (from the VIP module). The function transfers the tokens (minus a fee) to the reward store and records the bribe details.
 *   **How are bribes used to influence voting?**
@@ -181,17 +202,6 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
     2.  The Manager then calls `voting_reward::finalize_reward_cycle()`, providing a `cycle` number and the `block_height` of the snapshot taken in step 1. This links the cycle number to the captured state in the `cycle_snapshot_map`, making rewards for that cycle calculable. Bribes deposited via `bribe::deposit_bribe` for this `cycle` number are now associated with this finalized state.
 *   **How are voting rewards calculated for a user?**
     *   See "Reward Calculation Logic (`voting_reward`)" section above. It involves calculating the user's proportional share of the total weighted voting power (based on their historical staked Cabal token balances from the relevant snapshot) for each finalized cycle and multiplying that share by the total bribes offered in that cycle.
-*   **How does a user claim their voting rewards (including from previous cycles)?**
-    1.  The user calls `voting_reward::claim_voting_reward`, specifying the `metadata` of the *bribe token* they wish to claim (e.g., USDC, INIT).
-    2.  The function internally calls `voting_reward::get_single_reward`. This function iterates through *all* cycles that have been finalized (recorded in `voting_reward::ModuleStore.cycle_snapshot_map`).
-    3.  For each finalized cycle, it retrieves the corresponding snapshot block height and calculates the user's reward share for that cycle based on their historical staked balances (`cabal_token::get_snapshot_balance`) at that snapshot height.
-    4.  It multiplies the user's share for that cycle by the total amount of the *requested bribe token* deposited for that cycle (`bribe::get_total_bribes_by_token_for_cycle`).
-    5.  It sums these calculated amounts across all finalized cycles to get the user's *total entitlement* for the specified bribe token.
-    6.  It checks how much of this token the user has *already claimed* by reading `cabal::get_claimed_voting_reward_amount` from the user's `CabalStore`.
-    7.  It calculates the `remain_amount` (total entitlement - already claimed).
-    8.  It updates the user's claimed amount in `CabalStore` via `cabal::update_claimed_voting_reward_amount`.
-    9.  It transfers the `remain_amount` of the bribe token from the central reward store (`package::get_reward_store_address`) to the user.
-    *   **Key Point:** Users claim rewards per bribe token type, accumulating rewards across all past finalized cycles in a single transaction for that token. They don't need to claim cycle by cycle.
 *   **What is the role of the `manager.move` module?**
     *   It defines an administrative address (`Manager.manager_address`) separate from the deployer. Functions protected by `manager::is_authorized` can only be called by this address. It handles operational tasks like pausing, setting fees, configuring pools, managing roles, finalizing reward cycles, triggering snapshots, and potentially changing the manager address itself.
 *   **What is the role of the deployer address (`@staking_addr`)?**
@@ -201,3 +211,4 @@ Other relevant modules include `package` (shared addresses/signers), `manager` (
 *   **How are staking rewards handled?**
     *   **INIT Rewards (for sxINIT):** `cabal::compound_xinit_pool_rewards` calls `pool_router::request_claim_rewards` (which uses `vip::lock_staking::withdraw_delegator_reward`) and then `pool_router::withdraw_rewards`. A fee is taken, and the rest is effectively added back to the pool (increasing the xINIT backing per sxINIT).
     *   **LP Rewards (e.g., INIT for LP stakers):** `cabal::compound_lp_pool_rewards` calls `pool_router::request_claim_rewards` (which uses `cosmos::stargate::MsgWithdrawDelegatorReward`) and then `pool_router::withdraw_rewards`. The claimed INIT rewards are then used to provide single-asset liquidity back into the DEX pool via `dex::single_asset_provide_liquidity`, and the resulting LP tokens are used to reward Cabal LP holders when they transfer back/unstake.
+    *   **For both**, staking rewards are implicit, basically increasing the backing of the user's Cabal token to the original asset.
