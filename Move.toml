@@ -6,7 +6,7 @@ version = "0.0.0"
 #InitiaStdlib = { git = "https://github.com/initia-labs/move-natives.git", subdir = "initia_stdlib", rev = "v0.6.1"}
 
 [dependencies.vip]
-local = "../vip-contract/"
+local = "./vip-contract/"
 
 [addresses]
 std = "0x1"
