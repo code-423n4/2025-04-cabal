@@ -1,0 +1,12 @@
+[package]
+name = "vip"
+version = "0.0.1"
+
+[addresses]
+std = "0x1"
+vip = "0xe55cc823efb411bed5eed25aca5277229a54c62ab3769005f86cc44bc0c0e5ab"
+vesting = "0xfa5f07319724580ef16dcef6ce4d3b0bd0348e48"
+
+[dependencies]
+InitiaStdlib = { git = "https://github.com/initia-labs/move-natives.git", subdir = "initia_stdlib", rev = "main" }
+initia-vesting = { git = "https://github.com/initia-labs/vesting.git", rev = "main" }
