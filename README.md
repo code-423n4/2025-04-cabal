@@ -175,7 +175,7 @@ N/A
 The total supply of `INIT` locked in the system should approximately equate the total supply of `xINIT`.
 
 $$
-total\_init\_locked \approx total\_supply\_xinit
+total\\_init\\_locked \approx total\\_supply\\_xinit
 $$
 
 ### `xINIT` / `INIT` Ratio
@@ -191,7 +191,7 @@ $$
 The sum of all individual snapshot balances (`cabal_token::get_snapshot_balance`) for a particular block height should equate the total snapshot supply (`cabal_token::get_snapshot_supply`) of the block height.
 
 $$
-\sum_{user=1}^{total\_users}{get\_snapshot\_balance(user,token,block\_height)} = get\_snapshot\_supply(token,block\_height)
+\sum_{user=1}^{total\\_users}{get\\_snapshot\\_balance(user,token,block\\_height)} = get\\_snapshot\\_supply(token,block\\_height)
 $$
 
 ### Cycle Reward Shares
@@ -199,13 +199,13 @@ $$
 The sum of `voting_reward::get_cycle_reward_share` measurements for all users should equate `1` for all `block_height` values that are linked to a cycle end (i.e. have been snapshotted).
 
 $$
-\sum_{user=1}^{total\_users}{get\_cycle\_reward\_share(user, block\_height)} \approx 1, block\_height \in past\_snapshot
+\sum_{user=1}^{total\\_users}{get\\_cycle\\_reward\\_share(user, block\\_height)} \approx 1, block\\_height \in past\\_snapshot
 $$
 
 Conversely, for any `block_height` that has not been snapshotted this sum should equate `0`.
 
 $$
-\sum_{user=1}^{total\_users}{get\_cycle\_reward\_share(user, block\_height)} = 0, block\_height \notin past\_snapshot
+\sum_{user=1}^{total\\_users}{get\\_cycle\\_reward\\_share(user, block\\_height)} = 0, block\\_height \notin past\\_snapshot
 $$
 
 ### Cycle Bribe Weights
@@ -215,16 +215,16 @@ The sum of individual weights in the calculation result of bribe weights for a p
 In other words, the sum of the weights of each individual Minitia (L2 bridge supported) should reach very close to or equate `1`.
 
 $$
-cycle\_bribe\_weights = calculate\_bribe\_weights\_for\_cycle(cycle)
+cycle\\_bribe\\_weights = calculate\\_bribe\\_weights\\_for\\_cycle(cycle)
 $$
 $$
-\sum_{n=0}^{length(cycle\_bribe\_weights)}{cycle\_bribe\_weights[n]} \approx 1, cycle \in calculated\_cycles
+\sum_{n=0}^{length(cycle\\_bribe\\_weights)}{cycle\\_bribe\\_weights[n]} \approx 1, cycle \in calculated\\_cycles
 $$
 
 Conversely, for any `cycle` that has not been observed this sum should equate `0`.
 
 $$
-\sum_{n=0}^{length(cycle\_bribe\_weights)}{cycle\_bribe\_weights[n]} = 0, cycle \notin calculated\_cycles
+\sum_{n=0}^{length(cycle\\_bribe\\_weights)}{cycle\\_bribe\\_weights[n]} = 0, cycle \notin calculated\\_cycles
 $$
 
 ## Attack ideas (where to focus for bugs)
