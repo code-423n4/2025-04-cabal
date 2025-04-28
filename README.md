@@ -50,7 +50,7 @@ The system has been adequately equipped to handle slashing risks by querying the
 
 Cabal is a liquid staking protocol built on Initia, allowing users to stake INIT (via xINIT/sxINIT) and whitelisted LP tokens, while also participating in a bribe marketplace to influence Initia's VIP gauge voting.
 
-For an in-depth technical overview of the system including user flows, please consult the [relevant documentation](https://thecabal.xyz/docs/cabal) of the project.
+For an in-depth technical overview of the system including user flows, please consult the [relevant documentation](https://github.com/code-423n4/2025-04-cabal/blob/main/DOCUMENTATION.md) of the project. This link presently points to the C4 GitHub repository documentation and will be updated during the contest to a live documentation link.
 
 ## Links
 
@@ -59,10 +59,14 @@ The system has undergone two distinct audits with Zenith and Zellic. While the r
 - **Previous audits:**  
   - Private Zellic Audit Report
   - Private Zenith Audit Report
-- **Documentation:** https://thecabal.xyz/docs/cabal
+- **Documentation:**
+  - High-Level: https://thecabal.xyz/docs/cabal
+  - Technical: https://github.com/code-423n4/2025-04-cabal/blob/main/DOCUMENTATION.md *
 - **Website:** https://thecabal.xyz/
 - **X/Twitter:** https://x.com/CabalVIP
 - **Discord:** https://discord.gg/thecabal
+
+*\* This link will be updated during the contest to a live version of the project's documentation*
 
 ---
 
