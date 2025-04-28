@@ -22,7 +22,7 @@ _Note for C4 wardens: Anything included in this `Automated Findings / Publicly K
 
 ### Donation Inflation Attack
 
-Someone can donate a huge amount of raw `INIT` (to the tune of millions) to the pool without getting anything in return which would then cause an inflation attack as the new stakers would get a miniscule amount of `sxINIT` when staking.
+Someone can donate a huge amount of raw `INIT` (to the tune of millions) to the pool without getting anything in return which would then cause an inflation attack as the new stakers would get a minuscule amount of `sxINIT` when staking.
 
 Due to the absence of economic incentives around the attack, we consider it to be an acknowledged risk of the system.
 
@@ -40,7 +40,7 @@ Miniscule decimal rounding of `<1` unit may be observed when large numbers are u
 
 ### Price Guarantees
 
-Any issues around oracles misbehaving, misconfigured Time-Weighted Average Price (TWAP) setups, or other administartive / external misbehaviours are considered out-of-scope.
+Any issues around oracles misbehaving, misconfigured Time-Weighted Average Price (TWAP) setups, or other administrative / external misbehaviours are considered out-of-scope.
 
 ### Stake Slashing
 
@@ -68,7 +68,7 @@ The system has undergone two distinct audits with Zenith and Zellic. While the r
 
 # Scope
 
-Any test implementations within in-scope files (f.e. `fun` declarations prefixed with `[#test-only]`) are considered out-of-scope for the purposes of the contest.
+Any test implementations within in-scope files (f.e. `fun` declarations prefixed with `[#test-only]`) are considered out-of-scope for the purposes of the contest. Additionally, `TODO` comments in relation to the configuration of the system are considered known issues.
 
 The current state of the codebase is meant for a `TESTING` environment to ensure that the project's test suites run as smoothly as possible. 
 
