@@ -217,6 +217,7 @@ In other words, the sum of the weights of each individual Minitia (L2 bridge sup
 $$
 cycle\\_bribe\\_weights = calculate\\_bribe\\_weights\\_for\\_cycle(cycle)
 $$
+
 $$
 \sum_{n=0}^{length(cycle\\_bribe\\_weights)}{cycle\\_bribe\\_weights[n]} \approx 1, cycle \in calculated\\_cycles
 $$
