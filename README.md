@@ -70,6 +70,15 @@ The system has undergone two distinct audits with Zenith and Zellic. While the r
 
 Any test implementations within in-scope files (f.e. `fun` declarations prefixed with `[#test-only]`) are considered out-of-scope for the purposes of the contest.
 
+The current state of the codebase is meant for a `TESTING` environment to ensure that the project's test suites run as smoothly as possible. 
+
+**There are two instances in the code where this can be observed and needs to be changed to achieve a production-ready state of the system**:
+
+- `cabal.move`
+    - `cabal::initialize`: The `// USE THIS FOR PROD` function variant should be considered in scope as the `// USE THIS FOR TESTING` variant is not meant for production
+- `snapshots.move`
+    - `snapshots::update_snapshot`: The `mock_voting_power_weight` invocation should be commented out and the preceding `pool_router::get_voting_power_weight` invocation should be uncommented as the `mock_voting_power_weight` function is out-of-scope
+
 ### Files in scope
 
 | Contract | SLOC | Purpose | Libraries used |  
