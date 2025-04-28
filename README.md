@@ -196,17 +196,19 @@ $$
 
 ### Cycle Reward Shares
 
-The sum of `voting_reward::get_cycle_reward_share` measurements for all users should equate `1` for all `block_height` values that are linked to a cycle end (i.e. have been snapshotted).
+The sum of `voting_reward::get_cycle_reward_share` measurements for all users should equate `1` for all `block_height` values that are linked to a cycle end (i.e. have been snapshotted) and wherein bribes have been observed.
 
 $$
 \sum_{user=1}^{total\\_users}{get\\_cycle\\_reward\\_share(user, block\\_height)} \approx 1, block\\_height \in past\\_snapshot
 $$
 
-Conversely, for any `block_height` that has not been snapshotted this sum should equate `0`.
+If no bribes have been observed in a particular cycle that has ended, then the sum should equate `0`.
 
 $$
-\sum_{user=1}^{total\\_users}{get\\_cycle\\_reward\\_share(user, block\\_height)} = 0, block\\_height \notin past\\_snapshot
+\sum_{user=1}^{total\\_users}{get\\_cycle\\_reward\\_share(user, block\\_height)} = 0, block\\_height \in past\\_snapshot
 $$
+
+For any `block_height` that has not been snapshotted the result of this sum is indeterminate (i.e. can be any value).
 
 ### Cycle Bribe Weights
 
@@ -222,11 +224,7 @@ $$
 \sum_{n=0}^{length(cycle\\_bribe\\_weights)}{cycle\\_bribe\\_weights[n]} \approx 1, cycle \in calculated\\_cycles
 $$
 
-Conversely, for any `cycle` that has not been observed this sum should equate `0`.
-
-$$
-\sum_{n=0}^{length(cycle\\_bribe\\_weights)}{cycle\\_bribe\\_weights[n]} = 0, cycle \notin calculated\\_cycles
-$$
+For any `cycle` that has not been observed the result of this sum is indeterminate (i.e. can be any value).
 
 ## Attack ideas (where to focus for bugs)
 
