@@ -113,11 +113,13 @@ Any test implementations within in-scope files (f.e. `fun` declarations prefixed
 | Question                                | Answer                       |
 | --------------------------------------- | ---------------------------- |
 | ERC20 used by the protocol              |              Cabal LPTs, xINIT, sxINIT       |
-| Test coverage                           | ~76.94% Total, ~70.54% Scope                          |
+| Test coverage                           | ~76.94% Total, ~70.54% Scope*                          |
 | ERC721 used  by the protocol            |            No              |
 | ERC777 used by the protocol             |           No                |
 | ERC1155 used by the protocol            |              No            |
 | Chains the protocol will be deployed on | Initia (MoveVM)  |
+
+*\* The practical code coverage of the system is significantly higher as several real-world user flows have been tested albeit with mock implementations due to the difficulty in executing live-code integrations in test suites*
 
 ### ERC20 token behaviors in scope
 
