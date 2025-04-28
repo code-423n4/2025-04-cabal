@@ -240,6 +240,8 @@ We are most interested in any vunlerabilities or bugs revolving around the follo
     - `process_lp_stake`
     - `process_xinit_unstake`
     - `process_lp_unstake`
+- `sources/cabal_token.move`
+    - `get_snapshot_balance`
 - `sources/bribe.move`
     - `deposit_bribe`
 - `sources/voting_reward.move`
