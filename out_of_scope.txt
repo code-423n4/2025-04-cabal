@@ -1,3 +1,13 @@
+./vip-contract/sources/lock_staking.move
+./vip-contract/sources/operator.move
+./vip-contract/sources/test.move
+./vip-contract/sources/tvl_manager.move
+./vip-contract/sources/utils.move
+./vip-contract/sources/vault.move
+./vip-contract/sources/vesting.move
+./vip-contract/sources/vip.move
+./vip-contract/sources/weight_vote.move
+./vip-contract/sources/mock/mstaking.move
 ./sources/emergency.move
 ./sources/manager.move
 ./tests/bribing_test.move
