@@ -1,0 +1,20 @@
+{
+  "scripts": {
+    "build": "initiad move build",
+    "test": "initiad move test",
+    "deploy": "ts-node scripts/deploy.ts",
+    "test-": "initiad move test --filter",
+    "testgas": "initiad move test --filter test_gas --statistics"
+  },
+  "dependencies": {
+    "@initia/builder.js": "^0.2.7",
+    "@initia/initia.js": "^0.2.27",
+    "fs": "^0.0.1-security",
+    "json-bigint": "^1.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "@types/json-bigint": "^1.0.4"
+  }
+}

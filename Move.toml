@@ -1,0 +1,14 @@
+[package]
+name = "cabal"
+version = "0.0.0"
+
+#[dependencies]
+#InitiaStdlib = { git = "https://github.com/initia-labs/move-natives.git", subdir = "initia_stdlib", rev = "v0.6.1"}
+
+[dependencies.vip]
+local = "../vip-contract/"
+
+[addresses]
+std = "0x1"
+staking_addr = "0xe472ba1c00b2ee2b007b4c5788839d6fb7371c6"
+

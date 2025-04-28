@@ -1,0 +1,10 @@
+# IDEs
+.idea/
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Move build result
+**/build
+tests/full_epoch_test.move
