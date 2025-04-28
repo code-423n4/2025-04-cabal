@@ -1,8 +1,6 @@
 ./sources/bribe.move
 ./sources/cabal.move
 ./sources/cabal_token.move
-./sources/emergency.move
-./sources/manager.move
 ./sources/package.move
 ./sources/pool_router.move
 ./sources/snapshots.move
