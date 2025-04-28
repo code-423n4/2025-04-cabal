@@ -1,3 +1,5 @@
+./sources/emergency.move
+./sources/manager.move
 ./tests/bribing_test.move
 ./tests/core_staking_test.move
 ./tests/core_unstaking_test.move
