@@ -1,0 +1,412 @@
+==============================================================
+Guild: Code4rena
+Channel: ARCHIVE-PUBLIC / cabal-apr
+==============================================================
+
+[04/27/2025 21:32] 0xsigmoid (pinned)
+Hey all, excited for this audit to start tomorrow!
+
+Please DM/tag me or @0xRadian anytime for any questions. We'll be providing
+
+- Heavily commented code
+
+- Test suite of over 120 tests, all passing, testing pretty much everything across the protocol
+
+- Thorough documentation explaining the protocol, each module, and illustrated flowcharts of each major flow (function calls, etc.)
+
+{Reactions}
+c4ship (9) 👍 (8) 
+
+[04/27/2025 22:20] itsmetechjay
+Pinned a message.
+
+
+[04/28/2025 13:36] itsmetechjay (pinned)
+👋 Hello and welcome to the $23,000 in USDC **Cabal Liquid Staking Token** audit channel!
+
+ℹ️ This will be our first audit with live judging!  🎉  Details here: https://discord.com/channels/810916927919620096/810929015509483554/1366425937658511390
+
+📆 Audit opens Monday, 28 April 2025 20:00 (20:00 UTC) and runs through Monday, 05 May 2025 20:00 (20:00 UTC) (7 days).
+
+Please give a warm welcome to the Cabal team, particularly @0xSigmoid, @0xRadian, and @Cabalio, who will be available for questions either here in the channel or via a PRIVATE thread in the GMT+2 and GMT-7 timezones. 
+
+🤖 **Documentation bot assistance:** For general questions about the codebase, give our documentation bot a try, by tagging `@Docs Wolf` in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources. *Docs Wolf will be available when the audit is live.*
+
+We'll be posting relevant links, documentation, etc. here, so if you intend to participate in this audit, consider enabling notifications for this channel. 🐺 ⏰
+
+Audit Page: https://code4rena.com/audits/2025-04-cabal-liquid-staking-token
+
+{Reactions}
+shippy (6) discordthanks (3) 
+
+[04/28/2025 13:37] itsmetechjay
+Pinned a message.
+
+
+[04/28/2025 20:03] itsmetechjay
+ℹ️  Note: The Docs Wolf will be available for this audit in the next couple of days. We'll post an update once its live.
+
+
+[04/29/2025 02:53] samuselderg (pinned)
+Hello Wardens! The DocBot is now live and ready for your questions!
+
+> 🤖 Documentation bot assistance: For general questions about the codebase, give our documentation bot a try, by tagging @Docs Wolf in any thread (private or public) and asking your question. The bot will make its best attempt to answer based on the codebase and documentation, and link you to relevant resources.
+
+
+[04/29/2025 05:39] cloudellie
+Pinned a message.
+
+
+[04/29/2025 06:19] pfapostol
+Could anyone who has worked with Move in VS Code recommend any useful extensions?
+
+
+[04/29/2025 06:28] 0xsigmoid
+
+
+{Attachments}
+Code4rena - ARCHIVE-PUBLIC - cabal-apr [1364606640938160158].txt_Files/Screenshot_2025-04-28_at_11.28.00_PM-C919B.png
+
+
+[04/29/2025 06:28] 0xsigmoid
+@pfapostol
+
+{Reactions}
+👍 
+
+[04/29/2025 07:53] _givn
+For people wondering how to run the project:
+
+Make sure you have go lang installed. For macOS you can use `brew install go`
+Clone https://github.com/initia-labs/initia/tree/v1.0.0-beta.8
+
+Open Terminal, cd in `initia` root folder.
+`make install`
+
+Type `initiad version`, you should see the following output:
+```bash
+v1.0.0-beta.8
+```
+
+If you are experiencing issues, check the docs - https://initia.gitbook.io/initia/kBNuZF5MglV9d3zOOUeW/node-operators/running-initia-node/prerequisites#initia
+
+Go to cabal's root folder and run `yarn install`
+To run the tests: `yarn run test`
+For specific test: `yarn run test- [name]`
+
+{Reactions}
+🔥 (6) 
+
+[04/29/2025 10:33] 0xradian (pinned)
+Hey all, quick update. 
+
+All the main flows within the cabal flowchart google doc have been added. Feel free to check the doc out here, might be helpful to get you kickstarted:
+https://docs.google.com/document/d/1Ttrb3CRS7WFIZVmt6pSMWfgMQSa8s0d0wAk3VHeaguM/edit?usp=sharing
+
+{Embed}
+https://docs.google.com/document/d/1Ttrb3CRS7WFIZVmt6pSMWfgMQSa8s0d0wAk3VHeaguM/edit?usp=sharing
+Cabal main Flows
+Cabal main Flows This document provides an overview of the main flows within the protocol.   Staking Logic for xINIT and LP Tokens xINIT staking:  LP staking:  xINIT unstaking:    LP unstaking:      Claiming of unbonded assets      Bribing/Voting Bribing:   Voting:  Snapshotting: Expl...
+Code4rena - ARCHIVE-PUBLIC - cabal-apr [1364606640938160158].txt_Files/AHkbwyL7D4Zlint76gLvd9YwTlCLk5wiIXYrkHgHpd-CC998
+
+{Reactions}
+🙌 (8) 💯 (2) 
+
+[04/29/2025 10:41] cloudellie
+Pinned a message.
+
+
+[04/29/2025 10:42] cloudellie
+@🐺Wardens fyi ^
+
+
+[04/29/2025 12:34] zubyoz
+Hello!! please I couldn’t find the previous audit(s) are there any?
+
+
+[04/29/2025 18:26] pindarew
+what's NSLOC ?
+
+
+[04/29/2025 19:12] kal.xyz
+normalized source lines of code
+
+{Reactions}
+😂 (7) 
+
+[04/29/2025 20:08] 0xrochimaru
+2574
+
+
+[04/29/2025 20:09] pindarew
+Thanks
+
+
+[04/30/2025 00:51] ykuio
+there are two but they are private
+
+
+[04/30/2025 03:11] 0xsigmoid
+Reports aren't available yet for the Zenith/Zellic audits, but all fixes were made other than those explicitly found in the README
+
+
+[04/30/2025 13:28] l9baldur
+Hello does anybody have issue with Move extensions ? I have installed them but when I click "go to definition" it just doesnt find definitions of the functions. I'm using ubuntu 20.04 on WSL
+
+
+[04/30/2025 15:18] _givn
+Same here. It appears that the VSCode extensions are made to look at specific path for the sui-framework / move-stdlib. Since we're using Initia they should be configured to look elsewhere but I'm not sure if this can happen.
+
+For the time being I'm just referencing apis from the [initia_stdlib repo](https://github.com/initia-labs/movevm/tree/bf81d0d40e1514d308b3f5063ad37efa18bfac4d/precompile/modules/initia_stdlib/doc)
+
+
+[04/30/2025 15:21] pfapostol
+Also all sources are available in the build artifacts folder.
+
+{Reactions}
+🫡 
+
+[05/01/2025 00:26] nodesemesta
+sir i have some question can i dm you?
+
+
+[05/01/2025 00:26] 0xsigmoid
+Sure
+
+
+[05/01/2025 00:26] 0xsigmoid
+Actually make a private thread
+
+{Reactions}
+🫡 
+
+[05/01/2025 00:27] 0xsigmoid
+Under this channel
+
+
+[05/02/2025 15:57] chinedum
+Can someone please point me to the `staking_addr` source code
+
+
+[05/02/2025 17:21] _givn
+`staking_addr` is declared in `Move.toml` and contains the modules (.move files) you see in scope.
+
+`use staking_addr::bribe;` is actually `use <address>::<module name>;` 
+it means "the bribe module published at the address named 'staking_addr'"
+
+{Reactions}
+👍 (2) 
+
+[05/03/2025 09:44] skinneeomeje
+Can someone please point me to the initia_std contract
+
+
+[05/03/2025 13:09] theschnilch
+https://github.com/initia-labs/move-natives/tree/main/initia_stdlib
+
+{Reactions}
+👍 
+
+[05/03/2025 14:52] theschnilch
+Is there a guide on how to setup an initia local network to test the smart contracts there?
+
+
+[05/03/2025 18:41] 0xrochimaru
+This might be helpful
+https://initia.gitbook.io/initia/kBNuZF5MglV9d3zOOUeW/node-operators/running-initia-node/boot-an-initia-node
+
+{Embed}
+https://initia.gitbook.io/initia/kBNuZF5MglV9d3zOOUeW/node-operators/running-initia-node/boot-an-initia-node
+Boot an Initia Node | Initia (Closed Testnet)
+Guide to running an Initia Node.
+Code4rena - ARCHIVE-PUBLIC - cabal-apr [1364606640938160158].txt_Files/iyVpjffH5qanFSPGSWtt-FBA45
+
+
+[05/03/2025 20:01] 0xradian (pinned)
+Hey guys, hope the hunting is going well.
+
+Just wanted to let all of you know, that if you create private threads to please inculde both me @0xRadian  as well as @0xSigmoid . This decreases response time, which especially now with not so much time left, might be critical. It also allows us to coordinate better
+
+
+[05/03/2025 20:04] kartoonjoy
+Pinned a message.
+
+
+[05/03/2025 20:04] theschnilch
+i tried it but this just seems to be for a node that connects to the public network. I also looked through the app.toml config but I could find any parameter that would allow to run a private testnet.
+
+
+[05/03/2025 20:05] theschnilch
+@0xRadian @0xSigmoid Is there any way to run a local testnet or at least test the contracts without all the mocks?
+
+
+[05/03/2025 20:09] 0xradian
+I dont think that a local testnet would work
+
+
+[05/03/2025 20:09] 0xradian
+there is some parts of the code that are hard to test locally, such as the cosmos/ stargate calls
+
+
+[05/03/2025 20:16] 0xradian
+you could deploy on the actual testnet, you would need to comment some lines out, that are marked in the code as test only
+
+
+[05/03/2025 20:16] 0xradian
+https://scan.testnet.initia.xyz/initiation-2
+
+{Embed}
+https://scan.testnet.initia.xyz/initiation-2
+Initia Explorer | Initia Scan
+Initia, a network for interwoven rollups
+Code4rena - ARCHIVE-PUBLIC - cabal-apr [1364606640938160158].txt_Files/scan-ogimage-2E8EA.jpg
+
+
+[05/03/2025 20:21] theschnilch
+I think I can't do that, unfortunately, because the transactions I make to test a bug would be public and one could then reverse engineer the bug.
+
+
+[05/03/2025 20:22] 0xsigmoid
+Yeah that's true I suppose. Someone would need to be looking at your address + know about this audit though, right
+
+
+[05/03/2025 20:22] 0xradian
+Fair, however it would just be on your address, that noone knows, you can just create a new one
+
+
+[05/03/2025 20:22] 0xradian
+just for this, its security by obscurity, but the chances are low
+
+
+[05/03/2025 20:28] theschnilch
+@kartoonjoy | C4🎇🎇 Is it allowed to test bugs on a public testnet according to the C4 rules?
+
+
+[05/03/2025 20:43] kartoonjoy
+Im not sure that we have any particular rules re: that.
+
+
+[05/05/2025 20:02] C4
+**🚨 AUDIT ALERT**
+
+@🐺Wardens The **Cabal Liquid Staking Token** audit is now closed! Huge thanks to everyone who participated 🔍, whether you submitted a finding or not.
+
+What's next: The sponsor team and judge will review the findings over the next couple of weeks.
+
+
+[05/05/2025 20:45] 0xsigmoid
+Thank you for participating everyone! 
+
+🥂
+
+{Reactions}
+🫡 (3) 🫶 (4) hi5 (2) 💜 (2) 
+
+[05/05/2025 21:24] 0xradian
+Thanks for competing guys. 
+Hope you had a fun time, cheers
+
+{Reactions}
+💜 (7) 
+
+[05/08/2025 20:08] princewill3606
+@0xSigmoid  thanks for your assistance.
+
+
+[05/10/2025 22:11] pcprodigy
+In case i found low issue is it rewarded or only H/M
+
+
+[05/11/2025 00:51] thebrittfactor
+Issues downgraded to `low` are not awarded. Additionally, this audit didn't have a QA pool, so only HMs will be awarded.
+
+
+[05/12/2025 00:56] tchkvsky
+Hi, when does PJQA start? I assume it should be starting soon as most of the issues have been triaged by the judge. There's an issue of mine that was invalidated but I can't comment on it.
+
+Also, this channel has been archived. Is that typically done when the contest ends or when payouts are finalized.
+
+
+[05/12/2025 08:01] welith
+only the SR role can comment during PJQA
+
+
+[05/12/2025 09:20] cloudellie
+> Also, this channel has been archived. Is that typically done when the contest ends or when payouts are finalized. 
+When submissions close.
+
+{Reactions}
+👍 
+
+[05/12/2025 11:03] tchkvsky
+Oh. Thanks. 
+
+Returning to C4 for this contest. I had the SR role but noticed it's missing. Will ping support
+
+
+[05/12/2025 11:05] cloudellie
+I'm looking into this
+
+
+[05/12/2025 11:05] tchkvsky
+@CloudEllie Can I dm let's look into this?
+
+
+[05/12/2025 11:05] tchkvsky
+Okay. Thanks
+
+{Reactions}
+👍 
+
+[05/13/2025 09:44] cloudellie
+The above post has been removed, as the complaint was reviewed and resolved privately.
+
+
+[05/21/2025 18:16] itsmetechjay
+🤑 🎉  Awards for **Cabal Liquid Staking Token**:
+
+$7,560.73 USDC » @TheSchnilch
+$2,796.42 USDC » @MaxZuvex
+$2,306.62 USDC » @ret2basic.eth
+$2,116.67 USDC » @Rare_one
+$2,116.67 USDC » @MyFranchise
+$863.09 USDC » 0xAlix2 (@a_kalout and @ali_shehab)
+$744.94 USDC » @givn
+$324.97 USDC » @ChainSentry
+$249.98 USDC » @Bareli
+$249.98 USDC » @den-sosnowsky
+$249.98 USDC » @afriauditor
+$249.98 USDC » @Maze
+$169.99 USDC » @adam-idarrha
+
+🏁 Findings summary
+--------------------------------------—
+1 High risk findings
+7 Med risk findings
+564 wardens participated
+
+Top Hunter: TheSchnilch
+Top Gatherer: TheSchnilch
+
+Awards will be distributed on Polygon within the next week. Congratulations all!  💸 💸 💸
+
+{Reactions}
+🎉 (9) 🙌 (2) clapping (2) code4rena (2) 
+
+[05/21/2025 18:38] bytes032
+congrats @TheSchnilch
+
+{Reactions}
+➕ (7) 🙏 (2) 
+
+[07/09/2025 23:30] C4
+ℹ️ This channel is pending archive.   As a result, any private threads will be permanently deleted 07/18/2025 23:19. Please make sure to grab anything you might need before then.
+
+
+[07/17/2025 20:02] C4
+ℹ️ Reminder: this channel will be deleted after 24 hours.
+
+
+==============================================================
+Exported 66 message(s)
+==============================================================
